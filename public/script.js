@@ -14,7 +14,7 @@ const getQueryVariable = (variable = "") => {
   const localVideo = document.getElementById("js-local-stream");
   const localId = document.getElementById("js-local-id");
   const callTrigger = document.getElementById("js-call-trigger");
-  // const closeTrigger = document.getElementById('js-close-trigger');
+  const closeTrigger = document.getElementById("js-close-trigger");
   const remoteVideo = document.getElementById("js-remote-stream");
   const remoteId = document.getElementById("js-remote-id");
   // const meta = document.getElementById('js-meta');
@@ -72,13 +72,17 @@ const getQueryVariable = (variable = "") => {
   });
 
   peer.once("open", id => {
-    localId.textContent =
-      "https://kickoffionic.web.app/skyway/index.html?id=" + id;
+    localId.textContent = "https://kickoffionic.web.app/?id=" + id;
+    // localId.textContent = "http://127.0.0.1:8100/?id=" + id;
     const remoteId = getQueryVariable("id");
     console.log(remoteId);
     if (remoteId) {
-      console.log("true");
-      peerOn(remoteId);
+      const localIdHtml = document.getElementById("local-id");
+      localIdHtml.style.display = "none";
+      setTimeout(() => {
+        console.log("true");
+        peerOn(remoteId);
+      }, 500);
     }
   });
 
